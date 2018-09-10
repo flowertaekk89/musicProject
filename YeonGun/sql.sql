@@ -1,0 +1,34 @@
+CREATE TABLE singer(
+	singer_id NUMBER CONSTRAINT SINGER_ID_SEQ PRIMARY KEY,
+	name VARCHAR2(30)
+);
+
+CREATE TABLE title(
+	song_no NUMBER CONSTRAINT title_songNO_PK PRIMARY KEY,
+	title VARCHAR2(100) CONSTRAINT title_title_NN NOT NULL,
+	singer_no number,
+	liked NUMBER NOT NULL,
+	youtube VARCHAR2(300),
+	CONSTRAINT title_singerNO_FK FOREIGN KEY (singer_no)
+	REFERENCES singer(singer_id)
+);
+
+CREATE TABLE genre(
+	song_no NUMBER,
+	genre_no NUMBER,
+	CONSTRAINT GENRE_TITLE_FK FOREIGN KEY (song_no)
+	REFERENCES title(song_no)
+);
+
+CREATE SEQUENCE title_seq
+	START WITH 1
+	INCREMENT BY 1;
+
+CREATE SEQUENCE singer_seq
+	START WITH 1
+	INCREMENT BY 1;
+
+	
+INSERT INTO singer VALUES (SINGER_SEQ.NEXTVAL, '엄지'); // id(PK), 가수
+INSERT INTO title VALUES (TITLE_SEQ.NEXTVAL, 'The Way', SINGER_SEQ.CURRVAL, 0, 'https://www.youtube.com/v/3M6VCcHHnjQ');
+INSERT INTO genre VALUES (TITLE_SEQ.CURRVAL, 10);
